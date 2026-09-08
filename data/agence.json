@@ -1,0 +1,200 @@
+{
+  "company": {
+    "name": "Assurance La Ville Verte",
+    "slogan": "",
+    "city": "Benslimane",
+    "phone": "05 22 00 00 00"
+  },
+  "users": [
+    {
+      "id": "u1",
+      "name": "Admin",
+      "role": "Gestionnaire"
+    }
+  ],
+  "clients": [
+    {
+      "id": "1355f311-a761-4db0-a171-416cdfd1e9eb",
+      "name": "Rayane firady",
+      "phone": "062238976",
+      "email": ""
+    },
+    {
+      "id": "c1",
+      "name": "Karim El Fassi",
+      "phone": "06 12 34 56 78",
+      "email": "karim@email.ma"
+    },
+    {
+      "id": "c2",
+      "name": "Sara Benali",
+      "phone": "06 98 76 54 32",
+      "email": "sara@email.ma"
+    },
+    {
+      "id": "c3",
+      "name": "Youssef Amrani",
+      "phone": "06 55 44 33 22",
+      "email": "youssef@email.ma"
+    },
+    {
+      "id": "c4",
+      "name": "Nadia Cherkaoui",
+      "phone": "06 11 22 33 44",
+      "email": "nadia@email.ma"
+    },
+    {
+      "id": "c5",
+      "name": "Omar Tazi",
+      "phone": "06 77 88 99 00",
+      "email": "omar@email.ma"
+    }
+  ],
+  "resiliations": [
+    {
+      "id": "85cba17a-68a3-4f6c-9cf2-5a2660ebee34",
+      "createdAt": "2026-09-08",
+      "clientId": "1355f311-a761-4db0-a171-416cdfd1e9eb",
+      "policy": "0987",
+      "product": "Santé",
+      "date": "2026-09-08",
+      "reason": "Demande client",
+      "premium": 200,
+      "amount": 500,
+      "status": "Payé",
+      "payMode": "Espèces",
+      "payDate": "2026-09-08",
+      "chequeStatus": "",
+      "note": ""
+    },
+    {
+      "id": "31624a09-42f6-4b72-bca8-9dec4f19a445",
+      "createdAt": "2026-08-12",
+      "clientId": "c1",
+      "policy": "AUTO-88421",
+      "product": "Auto",
+      "date": "2026-08-12",
+      "amount": 2450,
+      "premium": 3200,
+      "reason": "Changement d’assureur",
+      "status": "Payé",
+      "payMode": "Espèces",
+      "payDate": "2026-08-12",
+      "chequeStatus": "",
+      "note": ""
+    },
+    {
+      "id": "61058b73-0574-4a45-8727-4ab1e8fa2cd7",
+      "createdAt": "2026-07-28",
+      "clientId": "c2",
+      "policy": "HAB-10293",
+      "product": "Habitation",
+      "date": "2026-07-28",
+      "amount": 1800,
+      "premium": 2100,
+      "reason": "Vente du bien",
+      "status": "En attente",
+      "payMode": "Chèque",
+      "payDate": "2026-07-28",
+      "chequeStatus": "En attente",
+      "note": "Chèque n° 4521"
+    },
+    {
+      "id": "3a0305ea-52d6-4ced-9645-daa2baf90d7e",
+      "createdAt": "2026-06-15",
+      "clientId": "c3",
+      "policy": "SAN-33011",
+      "product": "Santé",
+      "date": "2026-06-15",
+      "amount": 3600,
+      "premium": 4000,
+      "reason": "Demande client",
+      "status": "Payé",
+      "payMode": "Virement",
+      "payDate": "2026-06-16",
+      "chequeStatus": "",
+      "note": ""
+    },
+    {
+      "id": "31bce79e-2718-4426-8585-6ee2c111528b",
+      "createdAt": "2026-05-03",
+      "clientId": "c4",
+      "policy": "AUTO-11902",
+      "product": "Auto",
+      "date": "2026-05-03",
+      "amount": 1250,
+      "premium": 1500,
+      "reason": "Non-paiement",
+      "status": "Payé",
+      "payMode": "Chèque",
+      "payDate": "2026-05-10",
+      "chequeStatus": "Encaissé",
+      "note": ""
+    },
+    {
+      "id": "e614feeb-d150-4d3f-ad3f-dbc61d7fd588",
+      "createdAt": "2026-04-20",
+      "clientId": "c5",
+      "policy": "PRO-77410",
+      "product": "Professionnel",
+      "date": "2026-04-20",
+      "amount": 5200,
+      "premium": 6100,
+      "reason": "Demande client",
+      "status": "En attente",
+      "payMode": "Virement",
+      "payDate": "",
+      "chequeStatus": "",
+      "note": "En cours de traitement"
+    },
+    {
+      "id": "6dc79a3c-0ea9-4430-85e0-f14bd0d1f085",
+      "createdAt": "2026-03-11",
+      "clientId": "c1",
+      "policy": "VIE-22018",
+      "product": "Vie",
+      "date": "2026-03-11",
+      "amount": 890,
+      "premium": 1200,
+      "reason": "Autre",
+      "status": "Payé",
+      "payMode": "Carte",
+      "payDate": "2026-03-11",
+      "chequeStatus": "",
+      "note": ""
+    },
+    {
+      "id": "80ae061a-0638-49d1-b064-e2ff7ceb7fb5",
+      "createdAt": "2026-02-08",
+      "clientId": "c2",
+      "policy": "AUTO-55100",
+      "product": "Auto",
+      "date": "2026-02-08",
+      "amount": 2100,
+      "premium": 2500,
+      "reason": "Changement d’assureur",
+      "status": "Payé",
+      "payMode": "Espèces",
+      "payDate": "2026-02-08",
+      "chequeStatus": "",
+      "note": ""
+    },
+    {
+      "id": "7bb8496b-92cd-46d8-8b3a-cc72efaa6d61",
+      "createdAt": "2026-01-22",
+      "clientId": "c4",
+      "policy": "HAB-88021",
+      "product": "Habitation",
+      "date": "2026-01-22",
+      "amount": 950,
+      "premium": 1100,
+      "reason": "Demande client",
+      "status": "Payé",
+      "payMode": "Espèces",
+      "payDate": "2026-01-22",
+      "chequeStatus": "",
+      "note": ""
+    }
+  ],
+  "updatedAt": 1788901890792
+}

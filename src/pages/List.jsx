@@ -18,7 +18,7 @@ export default function List() {
       return (!s || text.includes(s)) && (!status || r.status === status) && (!product || r.product === product)
     })
   }, [data.resiliations, q, status, product, clientById])
-
+//achak wlD nass
   return (
     <div className="card">
       <div className="row space" style={{ marginBottom: 12 }}>

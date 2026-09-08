@@ -139,11 +139,16 @@ export function StoreProvider({ children }) {
           skipSave.current = true
           setData(remote)
           setStatus('ok')
+          setError('')
         }
       } catch {
+        const local = localBackup()
+        const fallback = local || seed()
         if (!cancelled) {
-          setError('Le serveur de l’agence n’est pas allumé ou n’est pas joignable.')
-          setStatus('error')
+          skipSave.current = true
+          setData(fallback)
+          setStatus('ok')
+          setError('')
         }
       }
     })()

@@ -188,33 +188,20 @@ export function StoreProvider({ children }) {
     }
   }, [])
 
-  useEffect(() => {
-    if (!data || status !== 'ok') return
-    if (skipSave.current) {
-      skipSave.current = false
-      return
+  async function persistState(nextState) {
+    try {
+      const saved = await saveStateWithSync(nextState)
+      localStorage.setItem(KEY, JSON.stringify(saved))
+      setData(saved)
+      setError('')
+      return saved
+    } catch {
+      localStorage.setItem(KEY, JSON.stringify(nextState))
+      setData(nextState)
+      setError('Sauvegarde locale enregistrée. Le serveur est temporairement indisponible.')
+      return nextState
     }
-
-    let cancelled = false
-    ;(async () => {
-      try {
-        const saved = await saveStateWithSync(data)
-        if (!cancelled) {
-          localStorage.setItem(KEY, JSON.stringify(saved))
-          setData(saved)
-          setError('')
-        }
-      } catch {
-        if (!cancelled) {
-          setError('Enregistrement sur le serveur impossible.')
-        }
-      }
-    })()
-
-    return () => {
-      cancelled = true
-    }
-  }, [data, status])
+  }
 
   function commit(updater) {
     setData((d) => {
@@ -254,36 +241,24 @@ export function StoreProvider({ children }) {
             updatedAt: Date.now(),
           }
 
-      try {
-        const saved = await saveStateWithSync(nextData)
-        skipSave.current = true
-        setData(saved)
-        localStorage.setItem(KEY, JSON.stringify(saved))
-        return saved
-      } catch {
-        skipSave.current = true
-        setData(nextData)
-        localStorage.setItem(KEY, JSON.stringify(nextData))
-        setError('Sauvegarde locale enregistrée. Le serveur est temporairement indisponible.')
-        return nextData
-      }
+      return persistState(nextData)
     }
 
     function removeResiliation(id) {
       commit((d) => ({ ...d, resiliations: d.resiliations.filter((r) => r.id !== id) }))
     }
 
-    function saveClient(payload, id) {
-      commit((d) => {
-        if (id) {
-          return { ...d, clients: d.clients.map((c) => (c.id === id ? { ...c, ...payload } : c)) }
-        }
-        return { ...d, clients: [{ id: uid(), ...payload }, ...d.clients] }
-      })
+    async function saveClient(payload, id) {
+      const base = data || localBackup() || seed()
+      const nextData = id
+        ? { ...base, clients: base.clients.map((c) => (c.id === id ? { ...c, ...payload } : c)), updatedAt: Date.now() }
+        : { ...base, clients: [{ id: uid(), ...payload }, ...base.clients], updatedAt: Date.now() }
+      return persistState(nextData)
     }
 
-    function updateCompany(company) {
-      commit((d) => ({ ...d, company }))
+    async function updateCompany(company) {
+      const base = data || localBackup() || seed()
+      return persistState({ ...base, company, updatedAt: Date.now() })
     }
 
     function exportJson() {

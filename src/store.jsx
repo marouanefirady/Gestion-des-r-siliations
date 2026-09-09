@@ -254,11 +254,19 @@ export function StoreProvider({ children }) {
             updatedAt: Date.now(),
           }
 
-      const saved = await saveStateWithSync(nextData)
-      skipSave.current = true
-      setData(saved)
-      localStorage.setItem(KEY, JSON.stringify(saved))
-      return saved
+      try {
+        const saved = await saveStateWithSync(nextData)
+        skipSave.current = true
+        setData(saved)
+        localStorage.setItem(KEY, JSON.stringify(saved))
+        return saved
+      } catch {
+        skipSave.current = true
+        setData(nextData)
+        localStorage.setItem(KEY, JSON.stringify(nextData))
+        setError('Sauvegarde locale enregistrée. Le serveur est temporairement indisponible.')
+        return nextData
+      }
     }
 
     function removeResiliation(id) {

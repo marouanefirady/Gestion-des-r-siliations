@@ -70,6 +70,8 @@ export default function FormPage() {
     await saveResiliation(
       {
         clientId: client.id,
+        clientName: form.name,
+        clientPhone: form.phone,
         policy: form.policy,
         product: form.product,
         date: form.date,

@@ -28,7 +28,7 @@ export default function Receipts() {
             <tbody>
               {cash.map((r) => (
                 <tr key={r.id} className="clickable" onClick={() => setId(r.id)} style={{ background: id === r.id ? '#e8f4ec' : undefined }}>
-                  <td>{clientById(r.clientId)?.name}</td>
+                  <td>{clientById(r.clientId)?.name || r.clientName || '—'}</td>
                   <td>{r.policy}</td>
                   <td>{formatDate(r.payDate || r.date)}</td>
                   <td>{money(r.amount)}</td>

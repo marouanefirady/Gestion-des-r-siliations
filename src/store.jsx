@@ -238,15 +238,21 @@ export function StoreProvider({ children }) {
 
     async function saveResiliation(payload, id, baseState) {
       const current = baseState || data || localBackup() || seed()
+      const fallbackClient = payload.clientId ? current.clients.find((c) => c.id === payload.clientId) : null
+      const normalizedPayload = {
+        ...payload,
+        clientName: payload.clientName || fallbackClient?.name || '',
+        clientPhone: payload.clientPhone || fallbackClient?.phone || '',
+      }
       const nextData = id
         ? {
             ...current,
-            resiliations: current.resiliations.map((r) => (r.id === id ? { ...r, ...payload } : r)),
+            resiliations: current.resiliations.map((r) => (r.id === id ? { ...r, ...normalizedPayload } : r)),
             updatedAt: Date.now(),
           }
         : {
             ...current,
-            resiliations: [{ id: uid(), createdAt: new Date().toISOString().slice(0, 10), ...payload }, ...current.resiliations],
+            resiliations: [{ id: uid(), createdAt: new Date().toISOString().slice(0, 10), ...normalizedPayload }, ...current.resiliations],
             updatedAt: Date.now(),
           }
 

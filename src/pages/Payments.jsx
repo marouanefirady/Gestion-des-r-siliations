@@ -42,7 +42,7 @@ export default function Payments() {
           <tbody>
             {rows.map((r) => (
               <tr key={r.id}>
-                <td>{clientById(r.clientId)?.name}</td>
+                <td>{clientById(r.clientId)?.name || r.clientName || '—'}</td>
                 <td>{r.policy}</td>
                 <td>{money(r.amount)}</td>
                 <td>

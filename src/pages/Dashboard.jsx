@@ -76,7 +76,7 @@ export default function Dashboard() {
           <tbody>
             {list.slice(0, 6).map((r) => (
               <tr key={r.id} className="clickable" onClick={() => nav(`/resiliations/${r.id}`)}>
-                <td>{clientById(r.clientId)?.name}</td>
+                <td>{clientById(r.clientId)?.name || r.clientName || '—'}</td>
                 <td>{r.policy}</td>
                 <td>{r.product}</td>
                 <td>{formatDate(r.date)}</td>

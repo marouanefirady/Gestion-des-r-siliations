@@ -42,8 +42,8 @@ export default function SearchPage() {
               const c = clientById(r.clientId)
               return (
                 <tr key={r.id} className="clickable" onClick={() => nav(`/resiliations/${r.id}`)}>
-                  <td>{c?.name}</td>
-                  <td>{c?.phone}</td>
+                  <td>{c?.name || r.clientName || '—'}</td>
+                  <td>{c?.phone || r.clientPhone || '—'}</td>
                   <td>{r.policy}</td>
                   <td>{formatDate(r.date)}</td>
                   <td>{money(r.amount)}</td>

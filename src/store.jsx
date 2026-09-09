@@ -74,6 +74,30 @@ async function putData(payload) {
   return res.json()
 }
 
+function mergeRecords(localList = [], remoteList = []) {
+  const byId = new Map()
+  ;[...remoteList, ...localList].forEach((item) => {
+    if (item?.id) byId.set(item.id, item)
+  })
+  return [...byId.values()]
+}
+
+async function saveStateWithSync(nextState) {
+  const remote = await fetchData().catch(() => null)
+  const base = remote && (remote.updatedAt || 0) >= (nextState.updatedAt || 0) ? remote : nextState
+  const merged = {
+    ...base,
+    ...nextState,
+    company: { ...(base.company || {}), ...(nextState.company || {}) },
+    users: nextState.users?.length ? nextState.users : base.users || [],
+    clients: mergeRecords(nextState.clients || [], remote?.clients || []),
+    resiliations: mergeRecords(nextState.resiliations || [], remote?.resiliations || []),
+    updatedAt: Date.now(),
+  }
+  const saved = await putData(merged)
+  return saved
+}
+
 export function money(n) {
   const v = Number(n) || 0
   return v.toLocaleString('fr-MA', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' DH'
@@ -163,8 +187,26 @@ export function StoreProvider({ children }) {
       skipSave.current = false
       return
     }
-    localStorage.setItem(KEY, JSON.stringify(data))
-    putData(data).catch(() => setError('Enregistrement sur le serveur impossible.'))
+
+    let cancelled = false
+    ;(async () => {
+      try {
+        const saved = await saveStateWithSync(data)
+        if (!cancelled) {
+          localStorage.setItem(KEY, JSON.stringify(saved))
+          setData(saved)
+          setError('')
+        }
+      } catch {
+        if (!cancelled) {
+          setError('Enregistrement sur le serveur impossible.')
+        }
+      }
+    })()
+
+    return () => {
+      cancelled = true
+    }
   }, [data, status])
 
   useEffect(() => {

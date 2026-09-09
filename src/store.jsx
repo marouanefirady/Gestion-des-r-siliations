@@ -219,16 +219,25 @@ export function StoreProvider({ children }) {
       return c
     }
 
-    function upsertClient({ name, phone, email }) {
-      const found = data.clients.find(
+    async function upsertClient({ name, phone, email }) {
+      const current = data || localBackup() || seed()
+      const found = current.clients.find(
         (c) => c.name.trim().toLowerCase() === name.trim().toLowerCase() && c.phone.replace(/\s/g, '') === phone.replace(/\s/g, '')
       )
       if (found) return found
-      return addClient({ name, phone, email: email || '' })
+
+      const newClient = { id: uid(), name, phone, email: email || '' }
+      const nextData = {
+        ...current,
+        clients: [newClient, ...current.clients],
+        updatedAt: Date.now(),
+      }
+      await persistState(nextData)
+      return newClient
     }
 
-    async function saveResiliation(payload, id) {
-      const current = data || localBackup() || seed()
+    async function saveResiliation(payload, id, baseState) {
+      const current = baseState || data || localBackup() || seed()
       const nextData = id
         ? {
             ...current,

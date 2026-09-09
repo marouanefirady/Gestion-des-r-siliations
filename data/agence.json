@@ -48,6 +48,12 @@
       "name": "Omar Tazi",
       "phone": "06 77 88 99 00",
       "email": "omar@email.ma"
+    },
+    {
+      "id": "fd837cd2-fd7a-416e-9e6e-9b92a958f761",
+      "name": "Test Client",
+      "phone": "0600000000",
+      "email": ""
     }
   ],
   "resiliations": [
@@ -194,7 +200,23 @@
       "payDate": "2026-01-22",
       "chequeStatus": "",
       "note": ""
+    },
+    {
+      "id": "da1e0052-5e18-4be4-b549-65b214924f44",
+      "createdAt": "2026-09-09",
+      "clientId": "fd837cd2-fd7a-416e-9e6e-9b92a958f761",
+      "policy": "POL-TEST-123",
+      "product": "Auto",
+      "date": "2026-09-09",
+      "reason": "Demande client",
+      "premium": 0,
+      "amount": 0,
+      "status": "Payé",
+      "payMode": "Espèces",
+      "payDate": "2026-09-09",
+      "chequeStatus": "",
+      "note": ""
     }
   ],
-  "updatedAt": 1788901890792
+  "updatedAt": 1788950426283
 }

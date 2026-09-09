@@ -56,10 +56,20 @@ export default function FormPage() {
       alert('Le nom du client et le n° de police sont obligatoires.')
       return
     }
-    const c = upsertClient({ name: form.name, phone: form.phone })
+
+    const current = data || { clients: [], resiliations: [] }
+    const client = await upsertClient({ name: form.name, phone: form.phone })
+    const baseState = {
+      ...current,
+      clients: current.clients.some((c) => c.id === client.id)
+        ? current.clients
+        : [client, ...current.clients],
+      updatedAt: Date.now(),
+    }
+
     await saveResiliation(
       {
-        clientId: c.id,
+        clientId: client.id,
         policy: form.policy,
         product: form.product,
         date: form.date,
@@ -72,7 +82,8 @@ export default function FormPage() {
         chequeStatus: form.payMode === 'Chèque' ? form.chequeStatus : '',
         note: form.note,
       },
-      existing?.id
+      existing?.id,
+      baseState
     )
     nav('/resiliations')
   }

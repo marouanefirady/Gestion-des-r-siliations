@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useStore } from '../store.jsx'
 
 export default function Settings() {
-  const { data, updateCompany, exportJson, importJson, resetDemo } = useStore()
+  const { data, updateCompany, exportJson, importJson } = useStore()
   const [company, setCompany] = useState(data.company)
   const [msg, setMsg] = useState('')
 
@@ -67,14 +67,6 @@ export default function Settings() {
                 }}
               />
             </label>
-          </div>
-          <div className="row" style={{ marginTop: 10 }}>
-            <button
-              className="btn danger"
-              onClick={() => confirm('Remettre les données de démonstration ?') && resetDemo()}
-            >
-              Données démo
-            </button>
           </div>
         </div>
       </div>

@@ -273,10 +273,6 @@ export function StoreProvider({ children }) {
       })
     }
 
-    function resetDemo() {
-      commit(seed())
-    }
-
     return {
       data,
       status,
@@ -291,7 +287,6 @@ export function StoreProvider({ children }) {
       updateCompany,
       exportJson,
       importJson,
-      resetDemo,
     }
   }, [data, status, error])
 

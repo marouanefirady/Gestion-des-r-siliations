@@ -50,14 +50,14 @@ export default function FormPage() {
     setForm((f) => ({ ...f, [k]: v }))
   }
 
-  function submit(e) {
+  async function submit(e) {
     e.preventDefault()
     if (!form.name.trim() || !form.policy.trim()) {
       alert('Le nom du client et le n° de police sont obligatoires.')
       return
     }
     const c = upsertClient({ name: form.name, phone: form.phone })
-    saveResiliation(
+    await saveResiliation(
       {
         clientId: c.id,
         policy: form.policy,

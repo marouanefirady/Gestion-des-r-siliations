@@ -240,19 +240,25 @@ export function StoreProvider({ children }) {
       return addClient({ name, phone, email: email || '' })
     }
 
-    function saveResiliation(payload, id) {
-      commit((d) => {
-        if (id) {
-          return {
-            ...d,
-            resiliations: d.resiliations.map((r) => (r.id === id ? { ...r, ...payload } : r)),
+    async function saveResiliation(payload, id) {
+      const current = data || localBackup() || seed()
+      const nextData = id
+        ? {
+            ...current,
+            resiliations: current.resiliations.map((r) => (r.id === id ? { ...r, ...payload } : r)),
+            updatedAt: Date.now(),
           }
-        }
-        return {
-          ...d,
-          resiliations: [{ id: uid(), createdAt: new Date().toISOString().slice(0, 10), ...payload }, ...d.resiliations],
-        }
-      })
+        : {
+            ...current,
+            resiliations: [{ id: uid(), createdAt: new Date().toISOString().slice(0, 10), ...payload }, ...current.resiliations],
+            updatedAt: Date.now(),
+          }
+
+      const saved = await saveStateWithSync(nextData)
+      skipSave.current = true
+      setData(saved)
+      localStorage.setItem(KEY, JSON.stringify(saved))
+      return saved
     }
 
     function removeResiliation(id) {

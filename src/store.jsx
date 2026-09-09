@@ -152,7 +152,7 @@ export function StoreProvider({ children }) {
 
   useEffect(() => {
     let cancelled = false
-    ;(async () => {
+    const syncFromServer = async () => {
       try {
         let remote = await fetchData()
         const local = localBackup()
@@ -175,9 +175,16 @@ export function StoreProvider({ children }) {
           setError('')
         }
       }
-    })()
+    }
+
+    syncFromServer()
+    const id = setInterval(syncFromServer, 4000)
+    window.addEventListener('focus', syncFromServer)
+
     return () => {
       cancelled = true
+      clearInterval(id)
+      window.removeEventListener('focus', syncFromServer)
     }
   }, [])
 
@@ -208,31 +215,6 @@ export function StoreProvider({ children }) {
       cancelled = true
     }
   }, [data, status])
-
-  useEffect(() => {
-    if (status !== 'ok') return
-    const tick = async () => {
-      try {
-        const remote = await fetchData()
-        setData((current) => {
-          if (!current) return remote
-          if ((remote.updatedAt || 0) > (current.updatedAt || 0)) {
-            skipSave.current = true
-            return remote
-          }
-          return current
-        })
-      } catch {
-        /* keep current data */
-      }
-    }
-    const id = setInterval(tick, 4000)
-    window.addEventListener('focus', tick)
-    return () => {
-      clearInterval(id)
-      window.removeEventListener('focus', tick)
-    }
-  }, [status])
 
   function commit(updater) {
     setData((d) => {
